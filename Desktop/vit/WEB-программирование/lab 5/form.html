@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обратная связь - Космос и Астрономия</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="header__nav">
+            <ul class="nav-list">
+                <li class="nav-list__item"><a href="index.html" class="nav-list__link">Главная</a></li>
+                <li class="nav-list__item"><a href="planets.html" class="nav-list__link">Планеты</a></li>
+                <li class="nav-list__item"><a href="gallery.html" class="nav-list__link">Галерея</a></li>
+                <li class="nav-list__item"><a href="contact.html" class="nav-list__link">Контакты</a></li>
+                <li class="nav-list__item"><a href="form.html" class="nav-list__link nav-list__link--active">Обратная связь</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main">
+        <section class="hero">
+            <h1 class="hero__title">Обратная связь</h1>
+            <p class="hero__subtitle">Задайте вопрос или поделитесь своими идеями о космосе</p>
+        </section>
+
+        <section class="form">
+            <h2 class="form__title">Форма обратной связи</h2>
+            
+            <form id="feedbackForm" class="form__container">
+                <div class="form__group">
+                    <label for="name" class="form__label">Ваше имя *</label>
+                    <input type="text" id="name" name="name" class="form__input" required placeholder="Введите ваше имя">
+                </div>
+                
+                <div class="form__group">
+                    <label for="email" class="form__label">Email *</label>
+                    <input type="email" id="email" name="email" class="form__input" required placeholder="example@mail.ru">
+                </div>
+                
+                <div class="form__group">
+                    <label for="phone" class="form__label">Телефон</label>
+                    <input type="tel" id="phone" name="phone" class="form__input" placeholder="+7 (999) 123-45-67">
+                </div>
+                
+                <div class="form__group">
+                    <label for="planet" class="form__label">Ваша любимая планета</label>
+                    <select id="planet" name="planet" class="form__select">
+                        <option value="">-- Выберите планету --</option>
+                        <option value="mercury">Меркурий</option>
+                        <option value="venus">Венера</option>
+                        <option value="earth">Земля</option>
+                        <option value="mars">Марс</option>
+                        <option value="jupiter">Юпитер</option>
+                        <option value="saturn">Сатурн</option>
+                    </select>
+                </div>
+                
+                <div class="form__group">
+                    <label for="message" class="form__label">Ваше сообщение *</label>
+                    <textarea id="message" name="message" class="form__textarea" rows="6" required placeholder="Напишите ваше сообщение..."></textarea>
+                </div>
+                
+                <div class="form__group">
+                    <label class="form__label">Что вас интересует?</label>
+                    <div class="form__checkbox-group">
+                        <input type="checkbox" id="interest-planets" name="interest" value="planets" class="form__checkbox">
+                        <label for="interest-planets" class="form__label">Планеты</label>
+                    </div>
+                    <div class="form__checkbox-group">
+                        <input type="checkbox" id="interest-stars" name="interest" value="stars" class="form__checkbox">
+                        <label for="interest-stars" class="form__label">Звёзды</label>
+                    </div>
+                    <div class="form__checkbox-group">
+                        <input type="checkbox" id="interest-galaxies" name="interest" value="galaxies" class="form__checkbox">
+                        <label for="interest-galaxies" class="form__label">Галактики</label>
+                    </div>
+                </div>
+                
+                <div class="form__group form__checkbox-group">
+                    <input type="checkbox" id="subscribe" name="subscribe" class="form__checkbox">
+                    <label for="subscribe" class="form__label">Подписаться на новости о космосе</label>
+                </div>
+                
+                <div class="form__group form__checkbox-group">
+                    <input type="checkbox" id="privacy" name="privacy" class="form__checkbox" required>
+                    <label for="privacy" class="form__label">Я согласен(а) на обработку данных *</label>
+                </div>
+                
+                <button type="submit" class="button button--submit">Отправить сообщение</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p class="footer__text">&copy; 2024 Космос и Астрономия. Все права защищены.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
