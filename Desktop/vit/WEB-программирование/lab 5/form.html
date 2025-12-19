@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма обратной связи - Лабораторная работа 5</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="header__nav">
+            <ul class="nav-list">
+                <li class="nav-list__item"><a href="index.html" class="nav-list__link">Главная</a></li>
+                <li class="nav-list__item"><a href="planets.html" class="nav-list__link">Планеты</a></li>
+                <li class="nav-list__item"><a href="gallery.html" class="nav-list__link">Галерея</a></li>
+                <li class="nav-list__item"><a href="form.html" class="nav-list__link nav-list__link--active">Форма</a></li>
+                <li class="nav-list__item"><a href="contact.html" class="nav-list__link">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main">
+        <section class="hero">
+            <h1 class="hero__title">Форма обратной связи</h1>
+            <p class="hero__subtitle">Лабораторная работа 5: динамическая валидация и асинхронные запросы</p>
+        </section>
+
+        <section class="content">
+            <h2 class="content__title">Свяжитесь с нами</h2>
+            <p>Заполните форму ниже, и мы обязательно ответим вам в ближайшее время. Все поля обязательны для заполнения.</p>
+            
+            <form id="contactForm" class="form">
+                <h3 class="form__title">Форма обратной связи</h3>
+
+                <div class="form__group">
+                    <label for="name" class="form__label">Имя:</label>
+                    <input type="text" id="name" name="name" class="form__input" placeholder="Введите ваше имя" required>
+                    <span class="hint" id="nameHint"></span>
+                </div>
+
+                <div class="form__group">
+                    <label for="email" class="form__label">Email:</label>
+                    <input type="email" id="email" name="email" class="form__input" placeholder="example@mail.com" required>
+                    <span class="hint" id="emailHint"></span>
+                </div>
+
+                <div class="form__group">
+                    <label for="phone" class="form__label">Телефон:</label>
+                    <input type="tel" id="phone" name="phone" class="form__input" placeholder="+7 (XXX) XXX-XX-XX" required>
+                    <span class="hint" id="phoneHint"></span>
+                </div>
+
+                <div class="form__group">
+                    <label for="message" class="form__label">Сообщение:</label>
+                    <textarea id="message" name="message" class="form__textarea" rows="5" placeholder="Ваше сообщение..." required></textarea>
+                    <span class="hint" id="messageHint"></span>
+                </div>
+
+                <div class="form__group">
+                    <label class="form__checkbox-group">
+                        <input type="checkbox" id="newsletter" name="newsletter" class="form__checkbox">
+                        <span class="form__label">Подписаться на рассылку новостей о космосе</span>
+                    </label>
+                </div>
+
+                <div class="form__group">
+                    <button type="submit" class="button button--submit">Отправить сообщение</button>
+                    <button type="reset" class="button" style="background: #666; margin-top: 10px; width: 100%;">Сбросить форму</button>
+                </div>
+
+                <div id="formStatus"></div>
+            </form>
+        </section>
+
+        <section class="content">
+            <h2 class="content__title">Что проверяет форма?</h2>
+            <ul class="info-list">
+                <li class="info-list__item"><strong>Имя:</strong> не менее 2 символов</li>
+                <li class="info-list__item"><strong>Email:</strong> корректный формат (example@domain.com)</li>
+                <li class="info-list__item"><strong>Телефон:</strong> формат +7 (XXX) XXX-XX-XX с автоматической маской</li>
+                <li class="info-list__item"><strong>Сообщение:</strong> не менее 10 символов</li>
+                <li class="info-list__item"><strong>Отправка:</strong> данные отправляются на тестовый сервер JSONPlaceholder</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p class="footer__text">&copy; 2025 Лабораторная работа 5. Веб-программирование. Все права защищены.</p>
+        <p class="footer__text">Динамическая валидация форм, обработка событий, асинхронные запросы.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
