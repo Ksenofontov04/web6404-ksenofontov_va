@@ -3,94 +3,338 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Планеты Солнечной системы</title>
+    <title>Планеты Солнечной системы - Лабораторная работа 5</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="planets.html">Планеты</a></li>
-                <li><a href="gallery.html">Галерея</a></li>
-                <li><a href="contact.html">Контакты</a></li>
-		<li><a href="form.html">Обратная связь</a></li>
+    <header class="header">
+        <nav class="header__nav">
+            <ul class="nav-list">
+                <li class="nav-list__item"><a href="index.html" class="nav-list__link">Главная</a></li>
+                <li class="nav-list__item"><a href="planets.html" class="nav-list__link nav-list__link--active">Планеты</a></li>
+                <li class="nav-list__item"><a href="gallery.html" class="nav-list__link">Галерея</a></li>
+                <li class="nav-list__item"><a href="form.html" class="nav-list__link">Форма</a></li>
+                <li class="nav-list__item"><a href="contact.html" class="nav-list__link">Контакты</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <h1>Планеты Солнечной системы</h1>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Планета</th>
-                    <th>Диаметр (км)</th>
-                    <th>Масса (отн. Земли)</th>
-                    <th>Период обращения</th>
-                    <th>Температура (°C)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Меркурий</td>
-                    <td>4,879</td>
-                    <td>0.055</td>
-                    <td>88 дней</td>
-                    <td>-173 до +427</td>
-                </tr>
-                <tr>
-                    <td>Венера</td>
-                    <td>12,104</td>
-                    <td>0.815</td>
-                    <td>225 дней</td>
-                    <td>+462</td>
-                </tr>
-                <tr>
-                    <td>Земля</td>
-                    <td>12,756</td>
-                    <td>1.000</td>
-                    <td>365 дней</td>
-                    <td>-89 до +58</td>
-                </tr>
-                <tr>
-                    <td>Марс</td>
-                    <td>6,792</td>
-                    <td>0.107</td>
-                    <td>687 дней</td>
-                    <td>-153 до +20</td>
-                </tr>
-                <tr>
-                    <td>Юпитер</td>
-                    <td>142,984</td>
-                    <td>317.8</td>
-                    <td>12 лет</td>
-                    <td>-108</td>
-                </tr>
-                <tr>
-                    <td>Сатурн</td>
-                    <td>120,536</td>
-                    <td>95.2</td>
-                    <td>29 лет</td>
-                    <td>-139</td>
-                </tr>
-            </tbody>
-        </table>
+    <main class="main">
+        <section class="hero">
+            <h1 class="hero__title">Планеты Солнечной системы</h1>
+            <p class="hero__subtitle">Лабораторная работа 5: асинхронные запросы и периодическое обновление данных</p>
+        </section>
 
-        <div class="planet-info">
-            <h2>Интересные факты</h2>
-            <ul>
-                <li>Юпитер - самая большая планета Солнечной системы</li>
-                <li>Венера - самая горячая планета</li>
-                <li>Марс называют "Красной планетой"</li>
-            </ul>
-        </div>
+        <section class="content">
+            <h2 class="content__title">Таблица планет</h2>
+            <p>Данные загружаются асинхронно и обновляются каждые 5 минут. Работает без установки сервера.</p>
+            
+            <!-- Статус загрузки -->
+            <div id="loadingStatus" style="background: #283593; color: white; padding: 10px; border-radius: 5px; margin: 10px 0; text-align: center;">
+                <i class="fas fa-spinner fa-spin"></i> Загрузка данных о планетах...
+            </div>
+            
+            <!-- Таблица -->
+            <div class="table-container">
+                <table class="table">
+                    <thead class="table__header">
+                        <tr>
+                            <th class="table__header-cell">Планета</th>
+                            <th class="table__header-cell table__cell--right">Диаметр (км)</th>
+                            <th class="table__header-cell table__cell--right">Расстояние от Солнца (млн км)</th>
+                            <th class="table__header-cell">Описание</th>
+                        </tr>
+                    </thead>
+                    <tbody id="planetsTableBody">
+                        <!-- Данные будут загружены асинхронно -->
+                        <tr>
+                            <td colspan="4" class="table__cell table__cell--center">Загрузка данных...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Кнопки управления -->
+            <div style="margin: 20px 0; text-align: center;">
+                <button id="refreshBtn" class="button" style="background: #2ecc71;">
+                    <i class="fas fa-sync-alt"></i> Обновить данные
+                </button>
+                <button id="testErrorBtn" class="button" style="background: #e74c3c;">
+                    <i class="fas fa-exclamation-triangle"></i> Тест ошибки
+                </button>
+            </div>
+        </section>
+
+        <section class="content">
+            <h2 class="content__title">Информация о работе</h2>
+            <div class="features">
+                <div class="features__item">
+                    <h3 class="features__item-title"><i class="fas fa-database"></i> Асинхронная загрузка</h3>
+                    <p>Имитация запроса к серверу с задержкой. Данные берутся из JavaScript-объекта.</p>
+                </div>
+                <div class="features__item">
+                    <h3 class="features__item-title"><i class="fas fa-history"></i> Периодическое обновление</h3>
+                    <p>Автоматическое обновление данных каждые 5 минут (по требованию лабы).</p>
+                </div>
+                <div class="features__item">
+                    <h3 class="features__item-title"><i class="fas fa-bug"></i> Обработка ошибок</h3>
+                    <p>Имитация ошибок сети и сервера с выводом понятных сообщений.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <h2 class="content__title">Лог работы</h2>
+            <div id="logContainer" style="background: #1e1e4a; border: 1px solid #3949ab; border-radius: 5px; padding: 15px; max-height: 200px; overflow-y: auto; font-family: monospace; font-size: 0.9rem;">
+                <div id="logContent">
+                    <div>> Готов к загрузке данных...</div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <p>&copy; 2024 Космос и Астрономия. Все права защищены.</p>
+    <footer class="footer">
+        <p class="footer__text">&copy; 2025 Лабораторная работа 5. Асинхронные запросы и обработка событий.</p>
+        <p class="footer__text">Работает без установки сервера - все данные в браузере.</p>
     </footer>
-<script src="script.js"></script>
+
+    <script src="script.js"></script>
+    
+    <!-- Скрипт для асинхронной загрузки планет (без сервера) -->
+    <script>
+        // Локальные данные о планетах (из db.json)
+        const localPlanetsData = [
+            {
+                id: 1,
+                name: "Меркурий",
+                diameter: 4879,
+                distance: 57.9,
+                description: "Самая маленькая планета Солнечной системы."
+            },
+            {
+                id: 2,
+                name: "Венера",
+                diameter: 12104,
+                distance: 108.2,
+                description: "Самая горячая планета из-за парникового эффекта."
+            },
+            {
+                id: 3,
+                name: "Земля",
+                diameter: 12742,
+                distance: 149.6,
+                description: "Единственная известная планета с жизнью."
+            },
+            {
+                id: 4,
+                name: "Марс",
+                diameter: 6779,
+                distance: 227.9,
+                description: "Красная планета, цель будущих колонизаций."
+            },
+            {
+                id: 5,
+                name: "Юпитер",
+                diameter: 142984,
+                distance: 778.5,
+                description: "Самая большая планета Солнечной системы."
+            },
+            {
+                id: 6,
+                name: "Сатурн",
+                diameter: 120536,
+                distance: 1433.5,
+                description: "Известен своими впечатляющими кольцами."
+            }
+        ];
+
+        // Логирование в контейнер
+        function addLog(message, type = 'info') {
+            const logContainer = document.getElementById('logContent');
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? '#e74c3c' : type === 'success' ? '#2ecc71' : '#3498db';
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `<span style="color: #bbb">[${timestamp}]</span> <span style="color: ${color}">${message}</span>`;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            console.log(message);
+        }
+
+        // Имитация асинхронного запроса к серверу
+        function mockFetch(url) {
+            return new Promise((resolve, reject) => {
+                // Имитация задержки сети (0.5-1.5 секунды)
+                const delay = 500 + Math.random() * 1000;
+                
+                setTimeout(() => {
+                    // Случайная имитация ошибки (20% шанс)
+                    const shouldFail = Math.random() < 0.2;
+                    
+                    if (shouldFail) {
+                        reject(new Error('Сервер не отвежает. Код ошибки: 503'));
+                    } else {
+                        // Возвращаем данные планет
+                        resolve({
+                            ok: true,
+                            json: () => Promise.resolve(localPlanetsData)
+                        });
+                    }
+                }, delay);
+            });
+        }
+
+        // Асинхронная загрузка данных о планетах
+        async function loadPlanetsData() {
+            const tableBody = document.getElementById('planetsTableBody');
+            const loadingStatus = document.getElementById('loadingStatus');
+            
+            if (!tableBody) return;
+            
+            try {
+                // Показываем статус загрузки
+                if (loadingStatus) {
+                    loadingStatus.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Имитация запроса к серверу...';
+                    loadingStatus.style.display = 'block';
+                }
+                
+                addLog('Отправка асинхронного запроса...');
+                
+                // Используем mock-запрос вместо реального fetch
+                const response = await mockFetch('http://localhost:3000/planets');
+                
+                if (!response.ok) {
+                    throw new Error(`Ошибка сервера: ${response.status}`);
+                }
+                
+                const planets = await response.json();
+                addLog(`Получено ${planets.length} записей о планетах`, 'success');
+                
+                // Очищаем таблицу
+                tableBody.innerHTML = '';
+                
+                // Заполняем таблицу
+                planets.forEach(planet => {
+                    const row = document.createElement('tr');
+                    row.className = 'table__row';
+                    
+                    // Добавляем анимацию при клике
+                    row.addEventListener('click', function() {
+                        this.classList.add('table__row--highlight');
+                        setTimeout(() => {
+                            this.classList.remove('table__row--highlight');
+                        }, 1500);
+                        addLog(`Выбрана планета: ${planet.name}`);
+                    });
+                    
+                    row.innerHTML = `
+                        <td class="table__cell" style="font-weight: bold;">${planet.name}</td>
+                        <td class="table__cell table__cell--right">${planet.diameter.toLocaleString()} км</td>
+                        <td class="table__cell table__cell--right">${planet.distance} млн км</td>
+                        <td class="table__cell">${planet.description}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+                
+                // Обновляем статус
+                if (loadingStatus) {
+                    loadingStatus.innerHTML = `<i class="fas fa-check-circle" style="color: #2ecc71;"></i> Данные успешно загружены (${planets.length} планет)`;
+                    setTimeout(() => {
+                        loadingStatus.style.display = 'none';
+                    }, 3000);
+                }
+                
+            } catch (error) {
+                addLog(`Ошибка: ${error.message}`, 'error');
+                
+                // При ошибке показываем локальные данные с предупреждением
+                const tableBody = document.getElementById('planetsTableBody');
+                if (tableBody) {
+                    tableBody.innerHTML = '';
+                    localPlanetsData.forEach(planet => {
+                        const row = document.createElement('tr');
+                        row.className = 'table__row';
+                        row.innerHTML = `
+                            <td class="table__cell" style="font-weight: bold;">${planet.name}</td>
+                            <td class="table__cell table__cell--right">${planet.diameter.toLocaleString()} км</td>
+                            <td class="table__cell table__cell--right">${planet.distance} млн км</td>
+                            <td class="table__cell">${planet.description}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                    
+                    // Добавляем строку с предупреждением
+                    const warningRow = document.createElement('tr');
+                    warningRow.innerHTML = `
+                        <td colspan="4" class="table__cell" style="color: #f39c12; text-align: center; font-size: 0.9rem;">
+                            <i class="fas fa-exclamation-triangle"></i> Используются локальные данные (ошибка сервера)
+                        </td>
+                    `;
+                    tableBody.appendChild(warningRow);
+                }
+                
+                if (loadingStatus) {
+                    loadingStatus.innerHTML = `<i class="fas fa-exclamation-triangle" style="color: #f39c12;"></i> Загружены локальные данные (ошибка сервера)`;
+                    setTimeout(() => {
+                        loadingStatus.style.display = 'none';
+                    }, 3000);
+                }
+            }
+        }
+
+        // Тестовая функция для проверки обработки ошибок
+        function testError() {
+            addLog('Тестирование обработки ошибок...', 'error');
+            const tableBody = document.getElementById('planetsTableBody');
+            
+            if (tableBody) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="table__cell" style="color: #e74c3c; text-align: center;">
+                            <i class="fas fa-exclamation-triangle"></i> Тестовая ошибка
+                            <br>
+                            <small>Имитация ошибки сети (404 Not Found)</small>
+                            <br>
+                            <small>Данные восстановятся через 3 секунды</small>
+                        </td>
+                    </tr>
+                `;
+            }
+            
+            // Через 3 секунды возвращаем нормальные данные
+            setTimeout(loadPlanetsData, 3000);
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            addLog('Страница загружена. Лабораторная работа 5.');
+            
+            // Загружаем данные
+            loadPlanetsData();
+            
+            // Настройка периодического обновления (5 минут = 300000 мс)
+            const intervalMinutes = 5;
+            const intervalMs = intervalMinutes * 60 * 1000;
+            setInterval(loadPlanetsData, intervalMs);
+            addLog(`Периодическое обновление настроено: каждые ${intervalMinutes} минут`);
+            
+            // Кнопка обновления
+            const refreshBtn = document.getElementById('refreshBtn');
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', function() {
+                    addLog('Ручное обновление данных...');
+                    loadPlanetsData();
+                });
+            }
+            
+            // Кнопка теста ошибки
+            const testErrorBtn = document.getElementById('testErrorBtn');
+            if (testErrorBtn) {
+                testErrorBtn.addEventListener('click', testError);
+            }
+            
+            addLog('Готово! Данные будут автоматически обновляться.');
+        });
+    </script>
 </body>
 </html>
